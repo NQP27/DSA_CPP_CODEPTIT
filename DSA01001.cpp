@@ -1,0 +1,34 @@
+#include <bits/stdc++.h>
+#define N 100000
+using namespace std;
+int main()
+{
+    ios::sync_with_stdio(0);
+    cin.tie(0);
+    cout.tie(0);
+#ifndef ONLINE_JUDGE
+    freopen("input.txt", "r", stdin);
+    freopen("output.txt", "w", stdout);
+#endif
+    int t;
+    cin >> t;
+    while (t--)
+    {
+        string s;
+        while (cin >> s)
+        {
+            int i = s.length() - 1;
+            while (i >= 0 and s[i] == '1')
+            {
+                s[i] = '0';
+                i--;
+            }
+            if (i >= 0)
+            {
+                s[i] = '1';
+            }
+            cout << s << endl;
+        }
+    }
+    return 0;
+}
