@@ -1,32 +1,38 @@
 #include <bits/stdc++.h>
 #define N 100000
 using namespace std;
-int check1(string s, int i, int j)
+#define ll long long
+string check(string s)
 {
-    return j - i > 2;
-}
-int check2(string s, int i, int j)
-{
-    if (s[i - 1] == '-')
+    char x = ')';
+    char y = '(';
+    stack<int> st;
+    for (int i = 0; i < s.length(); i++)
     {
-        return 1;
-    }
-    if (s[i - 1] == '*' or s[j + 1] == '*' or s[i - 1] == '/' or s[j + 1] == '/')
-    {
-        return 1;
-    }
-    return 0;
-}
-int check3(string s, int i, int j)
-{
-    for (int x = i + 1; x < j; x++)
-    {
-        if (s[x] == '+' or s[x] == '-')
+        if (s[i] == x)
         {
-            return 1;
+            int ok = 1;
+            while (st.top() != y)
+            {
+                char tmp = st.top();
+                if (tmp == '+' or tmp == '-' or tmp == '*' or tmp == '/')
+                {
+                    ok = 0;
+                }
+                st.pop();
+            }
+            if (ok)
+            {
+                return "Yes";
+            }
+            st.pop();
+        }
+        else
+        {
+            st.push(s[i]);
         }
     }
-    return 0;
+    return "No";
 }
 int main()
 {
@@ -43,36 +49,9 @@ int main()
     while (t--)
     {
         string s;
-        while (getline(cin, s))
-        {
-            int a[N], b[N];
-            int x = 0, y = 0;
-            for (int i = 1; i < s.length() - 1; i++)
-            {
-                char c1 = '(';
-                if (s[i] == c1)
-                {
-                    a[x] = i;
-                    x++;
-                }
-                char c2 = ')';
-                if (s[i] == c2)
-                {
-                    b[y] = i;
-                    y++;
-                }
-            }
-            for (int j = 0; j < x; j++)
-            {
-                if (check1(s, a[j], b[j]) == 1 and check2(s, a[j], b[j]) == 1 and check3(s, a[j], b[j]) == 1)
-                {
-                }
-                else
-                {
-                    cout << "Yes" << endl;
-                }
-            }
-        }
+        cin >> s;
+        cout << check(s) << endl;
     }
+    system("pause");
     return 0;
 }
