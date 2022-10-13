@@ -1,0 +1,43 @@
+#include <bits/stdc++.h>
+#define N 100000
+using namespace std;
+#define ll long long
+
+int main()
+{
+    ios::sync_with_stdio(0);
+    cin.tie(0);
+    cout.tie(0);
+#ifndef ONLINE_JUDGE
+    freopen("input.txt", "r", stdin);
+    freopen("output.txt", "w", stdout);
+#endif
+    int t;
+    cin >> t;
+    while (t--)
+    {
+        ll n;
+        cin >> n;
+        deque<ll> dq;
+        dq.push_back(6);
+        dq.push_back(8);
+        vector<ll> res;
+        while (dq.back() < pow(10, n))
+        {
+            res.push_back(dq.back());
+            ll tmp = dq.back();
+            dq.push_front(tmp * 10 + 6);
+            dq.push_front(tmp * 10 + 8);
+            dq.pop_back();
+        }
+        sort(res.begin(), res.end());
+        cout << res.size() << endl;
+        for (int i = 0; i < res.size(); i++)
+        {
+            cout << res[i] << " ";
+        }
+        cout << endl;
+    }
+    system("pause");
+    return 0;
+}
