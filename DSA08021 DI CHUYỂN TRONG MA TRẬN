@@ -1,0 +1,79 @@
+#include <bits/stdc++.h>
+#define N 1001
+using namespace std;
+#define ll long long
+int arr[N][N];
+struct toa_do
+{
+    int x, y, cnt;
+    toa_do() {}
+    toa_do(int a, int b, int c)
+    {
+        x = a;
+        y = b;
+        cnt = c;
+    }
+};
+int main()
+{
+    ios::sync_with_stdio(0);
+    cin.tie(0);
+    cout.tie(0);
+#ifndef ONLINE_JUDGE
+    freopen("input.txt", "r", stdin);
+    freopen("output.txt", "w", stdout);
+#endif
+    int t;
+    cin >> t;
+    while (t--)
+    {
+        int n, m;
+        cin >> n >> m;
+        for (int i = 1; i <= n; i++)
+        {
+            for (int j = 1; j <= m; j++)
+            {
+                cin >> arr[i][j];
+            }
+        }
+        queue<toa_do> dq;
+        toa_do a(1, 1, 0);
+        dq.push(a);
+        int res = INT_MAX;
+        int check[N][N];
+        check[1][1] = 1;
+        memset(check, 0, sizeof(check));
+        while (dq.size() > 0)
+        {
+            int i = dq.front().x;
+            int j = dq.front().y;
+            int dem = dq.front().cnt;
+            dq.pop();
+            if (i == n and j == m)
+            {
+                res = min(res, dem);
+                break;
+            }
+            if (!check[i + arr[i][j]][j])
+            {
+                toa_do tmp(i + arr[i][j], j, dem + 1);
+                dq.push(tmp);
+                check[i + arr[i][j]][j] = 1;
+            }
+            if (!check[i][j + arr[i][j]])
+            {
+                toa_do tmp(i, j + arr[i][j], dem + 1);
+                dq.push(tmp);
+                check[i][j + arr[i][j]] = 1;
+            }
+        }
+       
+        if(res>=100000){
+            cout << -1 << endl;
+        }else{
+            cout << res << endl;
+        }
+    }
+    system("pause");
+    return 0;
+}
