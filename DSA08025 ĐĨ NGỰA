@@ -1,0 +1,163 @@
+#include <bits/stdc++.h>
+#define N 10
+using namespace std;
+string toString(int n)
+{
+    ostringstream convert;
+    convert << n;
+    string s = convert.str();
+    return s;
+}
+int is_tm(int x)
+{
+    if (1 <= x and x <= 8)
+    {
+        return 1;
+    }
+    return 0;
+}
+int convert(char c)
+{
+    c = tolower(c);
+    switch (c)
+    {
+    case 'a':
+        return 1;
+        break;
+    case 'b':
+        return 2;
+        break;
+    case 'c':
+        return 3;
+        break;
+    case 'd':
+        return 4;
+        break;
+    case 'e':
+        return 5;
+        break;
+    case 'f':
+        return 6;
+        break;
+    case 'g':
+        return 7;
+        break;
+    case 'h':
+        return 8;
+        break;
+    default:
+        return 0;
+    }
+}
+struct cdn // cdn: coordinates
+{
+    string s;
+    int r;
+    int c;
+    long cnt;
+    cdn() {}
+    cdn(string x)
+    {
+        c = x[0] - '0';
+        r = x[1] - '0';
+        s = x;
+    }
+    cdn(string x, long k)
+    {
+        c = x[0] - '0';
+        r = x[1] - '0';
+        s = x;
+        cnt = k;
+    }
+    void output() { cout << s << " " << r << " " << c << " " << cnt << endl; }
+};
+int main()
+{
+    ios::sync_with_stdio(0);
+    cin.tie(0);
+    cout.tie(0);
+#ifndef ONLINE_JUDGE
+    freopen("input.txt", "r", stdin);
+    freopen("output.txt", "w", stdout);
+#endif
+    int t;
+    cin >> t;
+    while (t--)
+    {
+        string st, en, st1, en1;
+        cin >> st1 >> en1;
+        st = toString(convert(st1[0])) + string(1, st1[1]);
+        en = toString(convert(en1[0])) + string(1, en1[1]);
+        cdn a(st, 0), b(en);
+        queue<cdn> q;
+        q.push(a);
+        int check[N][N];
+        memset(check, 0, sizeof(check));
+        check[a.r][a.c] = 1;
+        long res = INT_MAX;
+        // a.output();
+        while (q.front().s != b.s)
+        {
+            cdn tmp = q.front();
+            q.pop();
+            if (is_tm(tmp.r - 2) == 1 and is_tm(tmp.c + 1) == 1 and check[tmp.r - 2][tmp.c + 1] == 0)
+            {
+                string x = toString(tmp.c + 1) + toString(tmp.r - 2);
+                cdn m(x, tmp.cnt + 1);
+                q.push(m);
+                check[tmp.r - 2][tmp.c + 1] = 1;
+            }
+            if (is_tm(tmp.r - 2) == 1 and is_tm(tmp.c - 1) == 1 and check[tmp.r - 2][tmp.c - 1] == 0)
+            {
+                string x = toString(tmp.c - 1) + toString(tmp.r - 2);
+                cdn m(x, tmp.cnt + 1);
+                q.push(m);
+                check[tmp.r - 2][tmp.c - 1] = 1;
+            }
+            if (is_tm(tmp.r + 2) == 1 and is_tm(tmp.c - 1) == 1 and check[tmp.r + 2][tmp.c - 1] == 0)
+            {
+                string x = toString(tmp.c - 1) + toString(tmp.r + 2);
+                cdn m(x, tmp.cnt + 1);
+                q.push(m);
+                check[tmp.r + 2][tmp.c - 1] = 1;
+            }
+            if (is_tm(tmp.r + 2) == 1 and is_tm(tmp.c + 1) == 1 and check[tmp.r + 2][tmp.c + 1] == 0)
+            {
+                string x = toString(tmp.c + 1) + toString(tmp.r + 2);
+                cdn m(x, tmp.cnt + 1);
+                q.push(m);
+                check[tmp.r + 2][tmp.c + 1] = 1;
+            }
+            if (is_tm(tmp.r - 1) == 1 and is_tm(tmp.c + 2) == 1 and check[tmp.r - 1][tmp.c + 2] == 0)
+            {
+                string x = toString(tmp.c + 2) + toString(tmp.r - 1);
+                cdn m(x, tmp.cnt + 1);
+                q.push(m);
+                check[tmp.r - 1][tmp.c + 2] = 1;
+            }
+            if (is_tm(tmp.r - 1) == 1 and is_tm(tmp.c - 2) == 1 and check[tmp.r - 1][tmp.c - 2] == 0)
+            {
+                string x = toString(tmp.c - 2) + toString(tmp.r - 1);
+                cdn m(x, tmp.cnt + 1);
+                q.push(m);
+                check[tmp.r - 1][tmp.c - 2] = 1;
+            }
+            if (is_tm(tmp.r + 1) == 1 and is_tm(tmp.c - 2) == 1 and check[tmp.r + 1][tmp.c - 2] == 0)
+            {
+                string x = toString(tmp.c - 2) + toString(tmp.r + 1);
+                cdn m(x, tmp.cnt + 1);
+                q.push(m);
+                check[tmp.r + 1][tmp.c - 2] = 1;
+            }
+            if (is_tm(tmp.r + 1) == 1 and is_tm(tmp.c + 2) == 1 and check[tmp.r + 1][tmp.c + 2] == 0)
+            {
+                string x = toString(tmp.c + 2) + toString(tmp.r + 1);
+                cdn m(x, tmp.cnt + 1);
+                q.push(m);
+                check[tmp.r + 1][tmp.c + 2] = 1;
+            }
+        }
+        cout << q.front().cnt << endl;
+    }
+    return 0;
+}
