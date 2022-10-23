@@ -1,0 +1,52 @@
+#include <bits/stdc++.h>
+#define N 1001
+using namespace std;
+int res[N][N];
+int to_int(string s)
+{
+    int res = 0;
+    for (int i = 0; i < s.length(); i++)
+    {
+        res = res * 10 + s[i] - '0';
+    }
+    return res;
+}
+int main()
+{
+    ios::sync_with_stdio(0);
+    cin.tie(0);
+    cout.tie(0);
+#ifndef ONLINE_JUDGE
+    freopen("input.txt", "r", stdin);
+    freopen("output.txt", "w", stdout);
+#endif
+    int t = 1;
+    while (t--)
+    {
+        int n;
+        cin >> n;
+        cin.ignore();
+        for (int i = 1; i <= n; i++)
+        {
+            string s;
+            getline(cin, s);
+            stringstream ss(s);
+            string tmp;
+            while (ss >> tmp)
+            {
+                int num = to_int(tmp);
+                res[i][num] = 1;
+            }
+        }
+        for (int i = 1; i <= n; i++)
+        {
+            for (int j = 1; j <= n; j++)
+            {
+                cout << res[i][j] << " ";
+            }
+            cout << "\n";
+        }
+    }
+    system("pause");
+    return 0;
+}
