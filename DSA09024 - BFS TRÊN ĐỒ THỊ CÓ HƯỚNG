@@ -1,0 +1,67 @@
+#include <bits/stdc++.h>
+#define N 100000
+using namespace std;
+#define ll long long
+bool visited[1001];
+vector<int> adj[1001];
+void bfs(int u)
+{
+    queue<int> q;
+    q.push(u);
+    visited[u] = true;
+    while (q.size() > 0)
+    {
+        int x = q.front();
+        q.pop();
+        cout << x << " ";
+        for (int v : adj[x])
+        {
+            if (!visited[v])
+            {
+               q.push(v);
+               visited[v]=true;
+            }
+        }
+        // for (int i = 0; i < adj[x].size(); i++)
+        // {
+        //     if (!visited[adj[x][i]])
+        //     {
+        //         q.push(adj[x][i]);
+        //         visited[adj[x][i]] = true;
+        //     }
+        // }
+    }
+}
+int main()
+{
+    ios::sync_with_stdio(0);
+    cin.tie(0);
+    cout.tie(0);
+#ifndef ONLINE_JUDGE
+    freopen("input.txt", "r", stdin);
+    freopen("output.txt", "w", stdout);
+#endif
+    int t;
+    cin >> t;
+    while (t--)
+    {
+        int n, m, u;
+        cin >> n >> m >> u;
+        for (int i = 1; i <= 1000; i++)
+        {
+            adj[i].clear();
+        }
+        memset(visited, false, sizeof(visited));
+        for (int i = 0; i < m; i++)
+        {
+            int x, y;
+            cin >> x >> y;
+            adj[x].push_back(y);
+          
+        }
+        bfs(u);
+        cout << endl;
+    }
+    system("pause");
+    return 0;
+}
