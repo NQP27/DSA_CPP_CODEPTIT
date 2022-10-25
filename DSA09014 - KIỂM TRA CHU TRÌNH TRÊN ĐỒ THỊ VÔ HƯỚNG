@@ -24,13 +24,31 @@ bool dfs(int u, int par)
         }
     }
     return false;
-    // for (int x : adj[u])
-    // {
-    //     if (!visited[x])
-    //     {
-    //         dfs(x)
-    //     }
-    // }
+}
+bool bfs(int u)
+{
+    visited[u] = true;
+    queue<int> q;
+    q.push(u);
+    while (!q.empty())
+    {
+        int v = q.front();
+        q.pop();
+        for (int i = 0; i < adj[v].size(); i++)
+        {
+            if (!visited[adj[v][i]])
+            {
+                q.push(adj[v][i]);
+                visited[adj[v][i]] = true;
+                parent[adj[v][i]] = v;
+            }
+            else if (adj[v][i] != parent[v])
+            {
+                return true;
+            }
+        }
+    }
+    return false;
 }
 int check()
 {
@@ -38,10 +56,13 @@ int check()
     {
         if (!visited[i])
         {
-            if (dfs(i, 0))
+            if (bfs(i))
             {
                 return 1;
             }
+          //  if(dfs(i,0){
+           //   return 1;
+          //  }
         }
     }
     return 0;
