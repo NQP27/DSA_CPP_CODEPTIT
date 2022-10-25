@@ -1,0 +1,88 @@
+#include <bits/stdc++.h>
+#define N 100000
+using namespace std;
+#define ll long long
+bool visited[1001];
+vector<int> adj[1001];
+int parent[1001];
+int n, m;
+bool dfs(int u, int par)
+{
+    visited[u] = true;
+    for (int i = 0; i < adj[u].size(); i++)
+    {
+        if (!visited[adj[u][i]])
+        {
+            if (dfs(adj[u][i], u))
+            {
+                return true;
+            }
+        }
+        else if (adj[u][i] != par)
+        {
+            return true;
+        }
+    }
+    return false;
+    // for (int x : adj[u])
+    // {
+    //     if (!visited[x])
+    //     {
+    //         dfs(x)
+    //     }
+    // }
+}
+int check()
+{
+    for (int i = 1; i <= n; i++)
+    {
+        if (!visited[i])
+        {
+            if (dfs(i, 0))
+            {
+                return 1;
+            }
+        }
+    }
+    return 0;
+}
+int main()
+{
+    ios::sync_with_stdio(0);
+    cin.tie(0);
+    cout.tie(0);
+#ifndef ONLINE_JUDGE
+    freopen("input.txt", "r", stdin);
+    freopen("output.txt", "w", stdout);
+#endif
+    int t;
+    cin >> t;
+    while (t--)
+    {
+        cin >> n >> m;
+        for (int i = 1; i <= 1000; i++)
+        {
+            adj[i].clear();
+        }
+        memset(visited, false, sizeof(visited));
+        memset(parent, 0, sizeof(parent));
+
+        for (int i = 0; i < m; i++)
+        {
+            int x, y;
+            cin >> x >> y;
+            adj[x].push_back(y);
+            adj[y].push_back(x);
+        }
+        if (check())
+        {
+            cout << "YES\n";
+        }
+        else
+        {
+            cout << "NO\n";
+        }
+    }
+    system("pause");
+    return 0;
+}
